@@ -25,6 +25,7 @@ Usage - formats:
 """
 
 import argparse
+import json
 import os
 import sys
 from pathlib import Path
@@ -74,6 +75,7 @@ def run(
         hide_conf=False,  # hide confidences
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
+        args_colors={},
 ):
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -182,7 +184,10 @@ def run(
                             1:  (255, 174, 33),
                             2: (240, 13, 5) 
                         }
-                        annotator.box_label(xyxy, label='', color=color_dict[c])
+                        if args_colors == {}:
+                            annotator.box_label(xyxy, label='', color=tuple(reversed(color_dict[c])))
+                        else:
+                            annotator.box_label(xyxy, label='', color=args_colors[c])
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
@@ -252,6 +257,7 @@ def parse_opt():
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
+    parser.add_argument('--colors', default={}, type=json, help='')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))
