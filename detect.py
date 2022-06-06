@@ -75,7 +75,7 @@ def run(
         hide_conf=False,  # hide confidences
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
-        args_colors={},
+        args_colors="{}",
 ):
     args_colors = json.loads(args_colors)
 
@@ -189,7 +189,7 @@ def run(
                         if args_colors == {}:
                             annotator.box_label(xyxy, label='', color=tuple(reversed(color_dict[c])))
                         else:
-                            annotator.box_label(xyxy, label='', color=args_colors[c])
+                            annotator.box_label(xyxy, label='', color=args_colors[str(c)])
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
