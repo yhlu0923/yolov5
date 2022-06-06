@@ -182,7 +182,7 @@ def run(
                             1:  (255, 174, 33),
                             2: (240, 13, 5) 
                         }
-                        annotator.box_label(xyxy, label='', color=color_dict[])
+                        annotator.box_label(xyxy, label='', color=color_dict[c])
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
