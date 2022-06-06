@@ -77,6 +77,8 @@ def run(
         dnn=False,  # use OpenCV DNN for ONNX inference
         args_colors={},
 ):
+    args_colors = json.loads(args_colors)
+
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     is_file = Path(source).suffix[1:] in (IMG_FORMATS + VID_FORMATS)
@@ -257,7 +259,7 @@ def parse_opt():
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
-    parser.add_argument('--args_colors', default={}, type=json, help='')
+    parser.add_argument('--args_colors', default={}, type=str, help='')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))
