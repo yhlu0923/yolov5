@@ -166,7 +166,23 @@ def run(
                     if save_img or save_crop or view_img:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                        annotator.box_label(xyxy, label, color=colors(c, True))
+                        # annotator.box_label(xyxy, label, color=colors(c, True))
+                        # name_dict = {
+                        #     'with_mask': 0,
+                        #     'mask_weared_incorrect': 1,
+                        #     'without_mask': 2 
+                        # }
+                        # color_dict = {
+                        #     'with_mask': (89, 224, 31),
+                        #     'mask_weared_incorrect':  (255, 174, 33),
+                        #     'without_mask': (240, 13, 5) 
+                        # }
+                        color_dict = {
+                            0: (89, 224, 31),
+                            1:  (255, 174, 33),
+                            2: (240, 13, 5) 
+                        }
+                        annotator.box_label(xyxy, label='', color=color_dict[])
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
 
