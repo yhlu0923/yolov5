@@ -75,9 +75,10 @@ def run(
         hide_conf=False,  # hide confidences
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
-        args_colors="{}",
+        args_colors={},
 ):
-    args_colors = json.loads(args_colors)
+    if args_colors != {}:
+        args_colors = json.loads(args_colors)
 
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
